@@ -306,7 +306,8 @@ The alert was successfully validated through Splunk's Trigger History, confirmin
 
 > This is stronger portfolio evidence than simply using the lab's default threshold, since it shows the process of reviewing real data, identifying noisy system accounts, filtering them out, tuning a threshold appropriate for the environment, and verifying the detection worked.
 
-> 📸 **Screenshot placeholder:** `images/13-alert-search-results.png` — Detection identifying the Slandon account with six privileged logons.
+> 📸 **Screenshot placeholder:** `images/13-alert-search-results.png` — Detection identifying the Slandon account with six privileged logons.<img width="1333" height="555" alt="13-alert-seach-results" src="https://github.com/user-attachments/assets/14330311-7289-41ab-8492-73e2287052b9" />
+
 > 📸 **Screenshot placeholder:** `images/14-alert-enabled.png` — Excessive Privileged Logons shown as an enabled scheduled alert.
 > 📸 **Screenshot placeholder:** `images/15-alert-trigger-history.png` — Trigger History confirming multiple successful alert executions.
 
@@ -385,68 +386,6 @@ index=windows_logs sourcetype=WinEventLog:Security EventCode=4697
 - **Key handling:** SSH authentication uses public-key auth (`.pem`/`.ppk`) rather than passwords. Any private key shared with a third-party tool (including an AI assistant) during troubleshooting should be treated as exposed and rotated in Azure before the environment is used beyond the lab.
 - **Least-privilege config:** the Universal Forwarder's Deployment Server field is intentionally left blank so it cannot be redirected to an unintended management endpoint.
 - **Lab data hygiene:** the log-generation script creates a temporary local test account, generates activity against it, and removes it afterward — no persistent accounts are left on the VM. The dedicated Active Directory test account used to validate the account-lockout detection was created separately from, and never used, the domain admin account.
-
----
-
-## Screenshots
-
-Placeholders for each stage of the build are called out inline throughout the [Implementation Summary](#implementation-summary) and [Verification Checklist](#verification-checklist) sections above. Capture these as you complete each step and drop them into `images/` with the filenames below — this is what turns the lab into verifiable portfolio evidence rather than a description of one.
-
-| # | File | What to capture |
-|---|---|---|
-| 1 | `images/01-azure-vm-overview.png` | Azure VM Overview blade (size, region, IPs) |
-| 2 | `images/02-nsg-inbound-rules.png` | NSG inbound rules (22 / 8000 / 9997 scoping) |
-| 3 | `images/03-splunk-web-login.png` | Splunk Web UI reachable at `<VM-IP>:8000` |
-| 4 | `images/04-receiving-port-config.png` | Receiving port 9997 enabled |
-| 5 | `images/05-index-created.png` | `windows_logs` index created |
-| 6 | `images/06-forwarder-inputs-conf.png` | `inputs.conf` on the Windows Server VM |
-| 7 | `images/07-log-generator-output.png` | Log-generation script output |
-| 8 | `images/08-data-flowing-confirmed.png` | `index=windows_logs \| head 100` results |
-| 9 | `images/09-successful-logins-search.png` | EventCode=4624 search results |
-| 10 | `images/10-after-hours-search.png` | After-hours logins search results |
-| 11 | `images/11-dashboard-full-view.png` | Full Windows Security Monitoring Dashboard (KPI cards + 4 panels) |
-| 12 | `images/12-dashboard-panel-edit.png` | One panel's search + visualization config |
-| 13 | `images/13-alert-search-results.png` | Detection results identifying `Slandon` with 6 privileged logons |
-| 14 | `images/14-alert-enabled.png` | *Excessive Privileged Logons* shown as an enabled scheduled alert |
-| 15 | `images/15-alert-trigger-history.png` | Trigger History confirming multiple successful alert executions |
-
-**Tips for portfolio-quality screenshots:**
-- Crop to the relevant panel/dialog — avoid full-desktop captures with unrelated browser tabs or taskbars visible.
-- Redact or blur public IPs, VM names, and account names you don't want visible in a public repo.
-- Keep a consistent naming scheme (as above) so the README's image links don't break when you add files.
-
----
-
-## Repository Structure
-
-```
-.
-├── README.md
-├── images/
-│   ├── architecture-diagram.png
-│   ├── 01-azure-vm-overview.png
-│   ├── 02-nsg-inbound-rules.png
-│   ├── 03-splunk-web-login.png
-│   ├── 04-receiving-port-config.png
-│   ├── 05-index-created.png
-│   ├── 06-forwarder-inputs-conf.png
-│   ├── 07-log-generator-output.png
-│   ├── 08-data-flowing-confirmed.png
-│   ├── 09-successful-logins-search.png
-│   ├── 10-after-hours-search.png
-│   ├── 11-dashboard-full-view.png
-│   ├── 12-dashboard-panel-edit.png
-│   ├── 13-alert-search-results.png
-│   ├── 14-alert-enabled.png
-│   └── 15-alert-trigger-history.png
-├── config/
-│   └── inputs.conf
-└── searches/
-    ├── successful-logins.spl
-    ├── after-hours-logins.spl
-    ├── excessive-privileged-logons-alert.spl
-    └── appendix-extended-detections.spl
-```
 
 ---
 
