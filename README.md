@@ -1,4 +1,4 @@
-<img width="1250" height="631" alt="05-index-created" src="https://github.com/user-attachments/assets/0e28256e-677a-4346-8bdb-f1aad4123358" />
+
 # Azure Splunk SIEM: Windows Security Monitoring & Detection
 
 **Deploying a free-tier SIEM on Azure to centralize Windows logging, build detections, and operationalize a SOC workflow**
