@@ -177,9 +177,12 @@ sudo /opt/splunk/bin/splunk start --accept-license --run-as-root
 sudo /opt/splunk/bin/splunk enable boot-start
 ```
 
-> 📸 **Screenshot placeholder:** `images/01-azure-vm-overview.png` — Azure portal Overview blade for the Splunk VM (region, size, public/private IP).
-> 📸 **Screenshot placeholder:** `images/02-nsg-inbound-rules.png` — Networking → Inbound port rules, showing 22/8000/9997 scoped as described above.
-> 📸 **Screenshot placeholder:** `images/03-splunk-web-login.png` — Splunk Web UI login screen at `http://<VM-IP>:8000`, confirming the service is reachable.
+<img width="1403" height="652" alt="01-azure-splunkvm-overview" src="https://github.com/user-attachments/assets/b18889be-5d99-4f55-b2a8-f60c72ae32ae" />
+
+<img width="1420" height="647" alt="02-nsg-inbound-rules" src="https://github.com/user-attachments/assets/f5a4681e-0e9d-4d7d-a175-43c6229a8b83" />
+
+<img width="1259" height="784" alt="03-splunk-web-login" src="https://github.com/user-attachments/assets/05cf9ba1-a65d-4a33-b585-12a7e9c97728" />
+
 
 ### 2. Data Input Configuration
 
