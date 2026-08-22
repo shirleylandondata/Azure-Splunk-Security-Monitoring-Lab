@@ -1,7 +1,7 @@
 
 # Azure Splunk SIEM: Windows Security Monitoring & Detection
 
-**Deploying a free-tier SIEM on Azure to centralize Windows logging, build detections, and operationalize a SOC workflow**
+**Azure-based Splunk SIEM lab featuring Windows Event Log ingestion, SPL threat hunting, security dashboards, account lockout analysis, and automated detection alerting.**
 
 ---
 
