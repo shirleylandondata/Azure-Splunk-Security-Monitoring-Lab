@@ -240,7 +240,7 @@ index = windows_logs
 - The after-hours search returned **773 events** outside the 7am–7pm window. Most of this volume came from machine/service accounts (e.g. `Lab1-VM$`) rather than human users, so this is documented as an *after-hours authentication monitoring query* rather than a claim that all 773 events were suspicious — an important distinction when presenting this kind of data to a SOC audience.
 
 **Results of index=windows_logs | head 100, proving the pipeline is live**
-> 📸 **Screenshot placeholder:** `images/08-data-flowing-confirmed.png` — results of `index=windows_logs | head 100`, proving the pipeline is live.
+<img width="1864" height="922" alt="08-data-flowing-confirmed" src="https://github.com/user-attachments/assets/d8876ffd-6919-4b5a-b971-a9928fd6c7e5" />
 
 **Results of the EventCode=4624 search, stated by account (762 events, including Slandon)**
 > <img width="1906" height="913" alt="09-Successful-logins-search" src="https://github.com/user-attachments/assets/dad19939-41ca-4c68-83d0-603b13673130" />
