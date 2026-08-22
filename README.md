@@ -1,3 +1,4 @@
+<img width="1250" height="631" alt="05-index-created" src="https://github.com/user-attachments/assets/0e28256e-677a-4346-8bdb-f1aad4123358" />
 # Azure Splunk SIEM: Windows Security Monitoring & Detection
 
 **Deploying a free-tier SIEM on Azure to centralize Windows logging, build detections, and operationalize a SOC workflow**
@@ -212,9 +213,12 @@ index = windows_logs
 - Used a PowerShell log-generation script to simulate realistic SOC-relevant activity on a fresh VM — failed logons, a successful logon, service restarts, application warnings, and an account lockout — to validate the pipeline end-to-end before searching.
 
 > 📸 **Screenshot placeholder:** `images/04-receiving-port-config.png` — Settings → Forwarding and Receiving → Configure Receiving, showing port 9997 enabled.
-> 📸 **Screenshot placeholder:** `images/05-index-created.png` — Settings → Indexes, showing the `windows_logs` index created.
+> <img width="1250" height="631" alt="05-index-created" src="https://github.com/user-attachments/assets/96b1b0eb-638d-43c3-b5a7-0d8e7a565ba0" />
+
 > 📸 **Screenshot placeholder:** `images/06-forwarder-inputs-conf.png` — `inputs.conf` open in VS Code on the Windows Server VM.
-> 📸 **Screenshot placeholder:** `images/07-log-generator-output.png` — PowerShell console output from the log-generation script (or `C:\lab3-log-output.txt`).
+> 
+<img width="1068" height="779" alt="07-log-generator-output" src="https://github.com/user-attachments/assets/9c6ff7b5-1128-4963-bfe8-0e8a601f1429" />
+
 
 ### 3. SPL Searches
 
