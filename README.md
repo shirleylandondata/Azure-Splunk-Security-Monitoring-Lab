@@ -211,21 +211,17 @@ index = windows_logs
 disabled = 0
 index = windows_logs
 ```
-**Settings → Forwarding and Receiving → Configure Receiving, showing port 9997 enabled.**
+*Used a PowerShell log-generation script to simulate realistic SOC-relevant activity on a fresh VM — failed logons, a successful logon, service restarts, application warnings, and an account lockout — to validate the pipeline end-to-end before searching.*
 > <img width="899" height="572" alt="06-forwarder-inputs" src="https://github.com/user-attachments/assets/ea27e2d7-b90f-45cd-ab3e-b4c964e8efe4" />
 
-*Used a PowerShell log-generation script to simulate realistic SOC-relevant activity on a fresh VM — failed logons, a successful logon, service restarts, application warnings, and an account lockout — to validate the pipeline end-to-end before searching.*
-
-**Receiving Ports Configuration**
+**Settings → Forwarding and Receiving → Configure Receiving, showing port 9997 enabled.**
 > <img width="918" height="583" alt="04-receiving-port-config" src="https://github.com/user-attachments/assets/e1edbb50-4d95-4015-aec3-bdf2c8f431c1" />
 
-**Index Created**
+**Settings → Indexes, showing the windows_logs index created.**
 > <img width="1250" height="631" alt="05-index-created" src="https://github.com/user-attachments/assets/96b1b0eb-638d-43c3-b5a7-0d8e7a565ba0" />
 
 **PowerShell console output from the the log-generation script**
-> 
-<img width="1068" height="779" alt="07-log-generator-output" src="https://github.com/user-attachments/assets/9c6ff7b5-1128-4963-bfe8-0e8a601f1429" />
-
+> <img width="1068" height="779" alt="07-log-generator-output" src="https://github.com/user-attachments/assets/9c6ff7b5-1128-4963-bfe8-0e8a601f1429" />
 
 
 ### 3. SPL Searches
@@ -243,10 +239,13 @@ index = windows_logs
 
 - The after-hours search returned **773 events** outside the 7am–7pm window. Most of this volume came from machine/service accounts (e.g. `Lab1-VM$`) rather than human users, so this is documented as an *after-hours authentication monitoring query* rather than a claim that all 773 events were suspicious — an important distinction when presenting this kind of data to a SOC audience.
 
+**Results of index=windows_logs | head 100, proving the pipeline is live**
 > 📸 **Screenshot placeholder:** `images/08-data-flowing-confirmed.png` — results of `index=windows_logs | head 100`, proving the pipeline is live.
 
+**Results of the EventCode=4624 search, stated by account (762 events, including Slandon)**
 > <img width="1906" height="913" alt="09-Successful-logins-search" src="https://github.com/user-attachments/assets/dad19939-41ca-4c68-83d0-603b13673130" />
 
+**Results of the after-hours logins search (773 events).**
 > <img width="1883" height="920" alt="10-After-hours-search" src="https://github.com/user-attachments/assets/9de98722-7fb5-4d8a-8d92-781227d47d16" />
 
 
