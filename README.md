@@ -9,6 +9,24 @@
 
 ---
 
+## What This Project Demonstrates
+
+This project demonstrates an end-to-end cloud security monitoring workflow built in Microsoft Azure using Splunk Enterprise.
+
+**Key capabilities demonstrated:**
+
+- Deployed and configured Azure virtual machines for SIEM monitoring
+- Configured Splunk Enterprise and Universal Forwarder
+- Ingested Windows Security Event Logs into a custom Splunk index
+- Developed SPL queries for authentication and security-event analysis
+- Investigated Windows Event IDs including 4624, 4625, 4648, 4672, and 4740
+- Built a Windows Security Monitoring dashboard
+- Identified after-hours authentication activity
+- Created a detection for excessive privileged logons
+- Configured and validated a scheduled Splunk security alert
+- Documented the architecture, configuration, detections, and validation evidence
+---
+
 ## Table of Contents
 
 - [Overview](#overview)
