@@ -1,0 +1,76 @@
+# ============================================================
+# Azure Splunk Security Monitoring Lab
+# Extended Windows Security Detection Searches
+# ============================================================
+
+
+# ------------------------------------------------------------
+# Failed Logons - Event ID 4625
+# Identifies failed Windows authentication attempts.
+# ------------------------------------------------------------
+
+index="windows_logs" source="WinEventLog:Security" EventCode=4625
+| table _time, Account_Name, Account_Domain, ComputerName
+| sort -_time
+
+
+# ------------------------------------------------------------
+# Failed Logons by Account
+# Counts failed authentication attempts for each account.
+# ------------------------------------------------------------
+
+index="windows_logs" source="WinEventLog:Security" EventCode=4625
+| stats count as failed_logons by Account_Name, ComputerName
+| sort -failed_logons
+
+
+# ------------------------------------------------------------
+# Account Lockouts - Event ID 4740
+# Identifies Windows accounts that were locked out.
+# ------------------------------------------------------------
+
+index="windows_logs" source="WinEventLog:Security" EventCode=4740
+| table _time, Account_Name, ComputerName
+| sort -_time
+
+
+# ------------------------------------------------------------
+# Account Lockout Summary
+# Summarizes account lockout activity.
+# ------------------------------------------------------------
+
+index="windows_logs" source="WinEventLog:Security" EventCode=4740
+| stats count as Lockout_Count latest(_time) as Last_Lockout by Account_Name, ComputerName
+| convert ctime(Last_Lockout)
+| sort -Lockout_Count
+
+
+# ------------------------------------------------------------
+# Explicit Credential Use - Event ID 4648
+# Detects authentication attempts where explicit credentials
+# were supplied to another process or service.
+# ------------------------------------------------------------
+
+index="windows_logs" source="WinEventLog:Security" EventCode=4648
+| table _time, Account_Name, Account_Domain, Target_Account_Name, Target_Server_Name, Process_Name
+| sort -_time
+
+
+# ------------------------------------------------------------
+# Privileged Logons - Event ID 4672
+# Identifies logons where special privileges were assigned.
+# ------------------------------------------------------------
+
+index="windows_logs" source="WinEventLog:Security" EventCode=4672
+| table _time, Account_Name, Account_Domain, ComputerName
+| sort -_time
+
+
+# ------------------------------------------------------------
+# Privileged Logons by Account
+# Summarizes privileged authentication activity.
+# ------------------------------------------------------------
+
+index="windows_logs" source="WinEventLog:Security" EventCode=4672
+| stats count as privilege_logons by Account_Name, ComputerName
+| sort -privilege_logons
