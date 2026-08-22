@@ -306,10 +306,12 @@ The alert was successfully validated through Splunk's Trigger History, confirmin
 
 > This is stronger portfolio evidence than simply using the lab's default threshold, since it shows the process of reviewing real data, identifying noisy system accounts, filtering them out, tuning a threshold appropriate for the environment, and verifying the detection worked.
 
-> 📸 **Screenshot placeholder:** `images/13-alert-search-results.png` — Detection identifying the Slandon account with six privileged logons.<img width="1333" height="555" alt="13-alert-seach-results" src="https://github.com/user-attachments/assets/14330311-7289-41ab-8492-73e2287052b9" />
+<img width="1333" height="555" alt="13-alert-seach-results" src="https://github.com/user-attachments/assets/14330311-7289-41ab-8492-73e2287052b9" />
 
-> 📸 **Screenshot placeholder:** `images/14-alert-enabled.png` — Excessive Privileged Logons shown as an enabled scheduled alert.
-> 📸 **Screenshot placeholder:** `images/15-alert-trigger-history.png` — Trigger History confirming multiple successful alert executions.
+> <img width="1350" height="646" alt="14-alert-enbabled" src="https://github.com/user-attachments/assets/88bab94c-2196-41b6-a4cb-fe81839e5fe8" />
+
+> <img width="1345" height="659" alt="15-alert-search-results" src="https://github.com/user-attachments/assets/210bc4bf-ad95-48f6-981c-a03d26d05e70" />
+
 
 ---
 
