@@ -52,27 +52,8 @@ Because the Splunk VM and the Windows Server/domain controller VM were provision
 
 The diagram below shows the full data path: Windows Server generates event logs → Universal Forwarder ships them encrypted over port 9997 → Splunk indexer parses and stores them → Splunk Web UI exposes search/dashboards/alerts → the SOC analyst investigates through a browser.
 
-![Architecture diagram: Windows Server VM forwards logs over port 9997 to the Splunk indexer, which stores them in the windows_logs index; the Splunk Web UI exposes search, dashboards, and alerts to the SOC analyst over HTTPS port 8000, all inside an Azure VNet scoped by NSG rules.](./images/architecture-diagram.png)
+<img width="1201" height="881" alt="Splunk-architecture-diagram" src="https://github.com/user-attachments/assets/7119fa12-feee-46ff-9f88-713e1e167572" />
 
-**Flow, in Mermaid form (renders natively on GitHub):**
-
-```mermaid
-flowchart TD
-    subgraph AZ["Microsoft Azure — Free Tier VNet"]
-        DC["🖥️ DC01 — Windows Server VM (Lab 1)<br/>Security (4624 · 4625 · 4740)<br/>System · Application<br/>Universal Forwarder installed"]
-        IDX["📥 Splunk Indexer<br/>Ubuntu 24.04 · Standard_B2s<br/>Receives on port 9997<br/>Stores in windows_logs index"]
-        WEB["🔎 Splunk Web UI<br/>Search & Reporting<br/>SPL · Dashboards · Alerts<br/>http://VM-IP:8000"]
-        NSG["🔐 NSG Rules<br/>22 (SSH) · 8000 (Web UI) → my IP only<br/>9997 (Forwarder) → peered VNet only"]
-    end
-    ANALYST["🧑‍💻 SOC Analyst<br/>Browser on local machine"]
-
-    DC -- "port 9997 · encrypted" --> IDX
-    IDX -- "parsed & stored" --> WEB
-    WEB -- "HTTPS · port 8000" --> ANALYST
-    NSG -. scopes .- DC
-    NSG -. scopes .- IDX
-    NSG -. scopes .- WEB
-```
 
 **Design decisions baked into this architecture:**
 - **Least-privilege NSG scoping** — port 8000 (Web UI) and 22 (SSH) are restricted to a single admin IP; port 9997 (forwarder ingestion) is restricted to the peered VNet address range only, never exposed to the public internet.
