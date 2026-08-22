@@ -213,6 +213,7 @@ index = windows_logs
 - Used a PowerShell log-generation script to simulate realistic SOC-relevant activity on a fresh VM — failed logons, a successful logon, service restarts, application warnings, and an account lockout — to validate the pipeline end-to-end before searching.
 
 > 📸 **Screenshot placeholder:** `images/04-receiving-port-config.png` — Settings → Forwarding and Receiving → Configure Receiving, showing port 9997 enabled.
+> 
 > <img width="1250" height="631" alt="05-index-created" src="https://github.com/user-attachments/assets/96b1b0eb-638d-43c3-b5a7-0d8e7a565ba0" />
 
 > 📸 **Screenshot placeholder:** `images/06-forwarder-inputs-conf.png` — `inputs.conf` open in VS Code on the Windows Server VM.
