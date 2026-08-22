@@ -1,0 +1,3 @@
+index="windows_logs" source="WinEventLog:Security" EventCode=4624
+| table _time, Account_Name, Account_Domain, ComputerName
+| sort -_time
