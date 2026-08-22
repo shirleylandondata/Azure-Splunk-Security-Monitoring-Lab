@@ -177,6 +177,8 @@ sudo /opt/splunk/bin/splunk enable boot-start
 ```
 - Connected via SSH public-key authentication rather than a password: converted the Azure-issued `.pem` key to PuTTY's `.ppk` format with PuTTYgen, loaded it under **Connection → SSH → Auth → Credentials**, and set the auto-login username so PuTTY connects non-interactively.
 
+<img width="1156" height="771" alt="03 1splunk-web-login" src="https://github.com/user-attachments/assets/48475477-ede4-47cd-bfee-9f1e29090969" />
+
 <img width="1259" height="784" alt="03-splunk-web-login" src="https://github.com/user-attachments/assets/05cf9ba1-a65d-4a33-b585-12a7e9c97728" />
 
 - Scoped NSG rules so the Web UI and SSH are reachable only from an admin IP, and the forwarder-ingest port is reachable only from the peered VNet — never the public internet.
