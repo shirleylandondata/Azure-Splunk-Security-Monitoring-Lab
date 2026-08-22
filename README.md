@@ -165,9 +165,18 @@ Configuration file on the forwarder host that defines what data to collect. Each
 ### 1. Splunk Enterprise Deployment
 
 - Provisioned an Ubuntu 24.04 Azure VM and downloaded the Splunk Enterprise `.deb` package.
+<img width="1403" height="652" alt="01-azure-splunkvm-overview" src="https://github.com/user-attachments/assets/b18889be-5d99-4f55-b2a8-f60c72ae32ae" />
+
 - Installed via `dpkg -i`, started the service with `--accept-license --run-as-root`, and enabled boot-start persistence.
+
 - Connected via SSH public-key authentication rather than a password: converted the Azure-issued `.pem` key to PuTTY's `.ppk` format with PuTTYgen, loaded it under **Connection → SSH → Auth → Credentials**, and set the auto-login username so PuTTY connects non-interactively.
+
+
 - Scoped NSG rules so the Web UI and SSH are reachable only from an admin IP, and the forwarder-ingest port is reachable only from the peered VNet — never the public internet.
+
+<img width="1420" height="647" alt="02-nsg-inbound-rules" src="https://github.com/user-attachments/assets/f5a4681e-0e9d-4d7d-a175-43c6229a8b83" />
+
+<img width="1259" height="784" alt="03-splunk-web-login" src="https://github.com/user-attachments/assets/05cf9ba1-a65d-4a33-b585-12a7e9c97728" />
 
 ```bash
 wget -O splunk-10.2.2-linux-amd64.deb "https://download.splunk.com/products/splunk/releases/10.2.2/linux/splunk-10.2.2-80b90d638de6-linux-amd64.deb"
@@ -176,11 +185,6 @@ sudo /opt/splunk/bin/splunk start --accept-license --run-as-root
 sudo /opt/splunk/bin/splunk enable boot-start
 ```
 
-<img width="1403" height="652" alt="01-azure-splunkvm-overview" src="https://github.com/user-attachments/assets/b18889be-5d99-4f55-b2a8-f60c72ae32ae" />
-
-<img width="1420" height="647" alt="02-nsg-inbound-rules" src="https://github.com/user-attachments/assets/f5a4681e-0e9d-4d7d-a175-43c6229a8b83" />
-
-<img width="1259" height="784" alt="03-splunk-web-login" src="https://github.com/user-attachments/assets/05cf9ba1-a65d-4a33-b585-12a7e9c97728" />
 
 
 ### 2. Data Input Configuration
@@ -211,13 +215,16 @@ index = windows_logs
 - Used a PowerShell log-generation script to simulate realistic SOC-relevant activity on a fresh VM — failed logons, a successful logon, service restarts, application warnings, and an account lockout — to validate the pipeline end-to-end before searching.
 
 > <img width="918" height="583" alt="04-receiving-port-config" src="https://github.com/user-attachments/assets/e1edbb50-4d95-4015-aec3-bdf2c8f431c1" />
+**Receiving Ports Configuration**
 
 > <img width="1250" height="631" alt="05-index-created" src="https://github.com/user-attachments/assets/96b1b0eb-638d-43c3-b5a7-0d8e7a565ba0" />
-![Uploading 04-receiving-port-config.png…]()
+**Index Created**
 
-> 📸 **Screenshot placeholder:** `images/06-forwarder-inputs-conf.png` — `inputs.conf` open in VS Code on the Windows Server VM.
+> <img width="899" height="572" alt="06-forwarder-inputs" src="https://github.com/user-attachments/assets/ea27e2d7-b90f-45cd-ab3e-b4c964e8efe4" />
+**Forwarder Inputs**
 > 
 <img width="1068" height="779" alt="07-log-generator-output" src="https://github.com/user-attachments/assets/9c6ff7b5-1128-4963-bfe8-0e8a601f1429" />
+**Log Generator Out**
 
 
 ### 3. SPL Searches
