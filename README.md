@@ -251,8 +251,8 @@ Built a **Windows Security Monitoring Dashboard** with three KPI cards and four 
 | Login Activity Over Time (EventCode 4624, `timechart`) | Line chart |
 | After-Hours Logins | Events list |
 
-> 📸 **Screenshot placeholder:** `images/11-dashboard-full-view.png` — the complete **Windows Security Monitoring Dashboard**, including the three KPI cards and all four panels populated.
-> 📸 **Screenshot placeholder:** `images/12-dashboard-panel-edit.png` — the "Add Panel" configuration view for one panel, showing search + visualization type selected.
+<img width="1620" height="1186" alt="Windows Security Monitoring Dashboard" src="https://github.com/user-attachments/assets/f6635051-467c-475d-9236-cb3db80b9881" />
+
 
 ### 5. Automated Security Detection
 
