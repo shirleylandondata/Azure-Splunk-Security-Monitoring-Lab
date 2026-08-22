@@ -169,22 +169,19 @@ Configuration file on the forwarder host that defines what data to collect. Each
 
 - Installed via `dpkg -i`, started the service with `--accept-license --run-as-root`, and enabled boot-start persistence.
 
-- Connected via SSH public-key authentication rather than a password: converted the Azure-issued `.pem` key to PuTTY's `.ppk` format with PuTTYgen, loaded it under **Connection → SSH → Auth → Credentials**, and set the auto-login username so PuTTY connects non-interactively.
-
-
-- Scoped NSG rules so the Web UI and SSH are reachable only from an admin IP, and the forwarder-ingest port is reachable only from the peered VNet — never the public internet.
-
-<img width="1420" height="647" alt="02-nsg-inbound-rules" src="https://github.com/user-attachments/assets/f5a4681e-0e9d-4d7d-a175-43c6229a8b83" />
-
-<img width="1259" height="784" alt="03-splunk-web-login" src="https://github.com/user-attachments/assets/05cf9ba1-a65d-4a33-b585-12a7e9c97728" />
-
 ```bash
 wget -O splunk-10.2.2-linux-amd64.deb "https://download.splunk.com/products/splunk/releases/10.2.2/linux/splunk-10.2.2-80b90d638de6-linux-amd64.deb"
 sudo dpkg -i splunk-10.2.2-linux-amd64.deb
 sudo /opt/splunk/bin/splunk start --accept-license --run-as-root
 sudo /opt/splunk/bin/splunk enable boot-start
 ```
+- Connected via SSH public-key authentication rather than a password: converted the Azure-issued `.pem` key to PuTTY's `.ppk` format with PuTTYgen, loaded it under **Connection → SSH → Auth → Credentials**, and set the auto-login username so PuTTY connects non-interactively.
 
+<img width="1259" height="784" alt="03-splunk-web-login" src="https://github.com/user-attachments/assets/05cf9ba1-a65d-4a33-b585-12a7e9c97728" />
+
+- Scoped NSG rules so the Web UI and SSH are reachable only from an admin IP, and the forwarder-ingest port is reachable only from the peered VNet — never the public internet.
+
+<img width="1420" height="647" alt="02-nsg-inbound-rules" src="https://github.com/user-attachments/assets/f5a4681e-0e9d-4d7d-a175-43c6229a8b83" />
 
 
 ### 2. Data Input Configuration
