@@ -402,8 +402,9 @@ index=windows_logs sourcetype=WinEventLog:Security EventCode=4697
 
 ---
 
-## 👩🏽‍💻 Author
-Shirley Landon  Data Analysis | Cloud | IT | Automation
+## Author
+Shirley Landon  
+Business Intelligence Analyst | Cloud | IT | Automation
 
 **GitHub**: https://github.com/shirleylandondata/ **LinkedIn**: https://www.linkedin.com/in/shirleylandon/
 
