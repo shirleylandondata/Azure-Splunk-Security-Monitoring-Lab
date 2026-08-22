@@ -189,6 +189,8 @@ sudo /opt/splunk/bin/splunk enable boot-start
 ### 2. Data Input Configuration
 
 - Enabled receiving on port `9997` and created a dedicated index, `windows_logs`, in the Splunk Web UI.
+<img width="1247" height="385" alt="Enabled_Port_9997" src="https://github.com/user-attachments/assets/67963f22-ad8a-4c4c-8db7-e80e6dda0ee0" />
+
 - Installed the Universal Forwarder on the Windows Server VM, pointing it at the Splunk indexer's **private** IP on port `9997` (no Deployment Server configured).
 - Authored `inputs.conf` to forward the `Security`, `System`, and `Application` Windows Event Logs into `windows_logs`:
 
@@ -351,7 +353,17 @@ After generating test failed-logon activity, Event 4625 (failed logon) appeared 
 | Dashboard displays data | Windows Security Monitoring Dashboard shows populated KPI cards and panels |
 | Alert is active | **Settings → Searches, Reports, and Alerts** shows *Excessive Privileged Logons* as *Enabled* |
 
-> 📸 **Screenshot placeholder:** `images/15-alert-trigger-history.png` — Trigger History showing multiple successful firings of the *Excessive Privileged Logons* alert.
+**Data is flowing into Splunk**
+<img width="1847" height="916" alt="Data_Flowing_Into_Splunk" src="https://github.com/user-attachments/assets/6aef5062-a069-45f6-8c1a-fefc8ef84973" />
+
+**Login activity search works**
+<img width="1515" height="808" alt="Find_successful-logins_4624" src="https://github.com/user-attachments/assets/35574c51-024f-4093-bc74-e58ef6cac964" />
+
+**Dashboard displays data**
+<img width="1620" height="1186" alt="Windows Security Monitoring Dashboard" src="https://github.com/user-attachments/assets/547f645d-0191-4a5a-94c9-cb5463155d00" />
+
+**Alert is active**
+<img width="1402" height="421" alt="Alert_Active" src="https://github.com/user-attachments/assets/46ecc73a-4000-4509-9985-872d068773ca" />
 
 ---
 
