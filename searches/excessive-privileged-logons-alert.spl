@@ -1,0 +1,8 @@
+index="windows_logs" source="WinEventLog:Security" EventCode=4672
+| where NOT like(Account_Name, "%$")
+    AND Account_Name!="SYSTEM"
+    AND Account_Name!="LOCAL SERVICE"
+    AND Account_Name!="NETWORK SERVICE"
+| stats count as privilege_logons by Account_Name, ComputerName
+| where privilege_logons > 5
+| sort -privilege_logons
