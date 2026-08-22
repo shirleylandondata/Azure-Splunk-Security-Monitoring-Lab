@@ -1,0 +1,5 @@
+index="windows_logs" source="WinEventLog:Security" EventCode=4624
+| eval hour=tonumber(strftime(_time,"%H"))
+| where hour<7 OR hour>19
+| table _time, Account_Name, Account_Domain, ComputerName
+| sort -_time
