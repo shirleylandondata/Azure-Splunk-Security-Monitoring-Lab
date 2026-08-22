@@ -3,11 +3,6 @@
 
 **Deploying a free-tier SIEM on Azure to centralize Windows logging, build detections, and operationalize a SOC workflow**
 
-![Splunk](https://img.shields.io/badge/Splunk-Enterprise%20Free-000000?logo=splunk&logoColor=white)
-![Azure](https://img.shields.io/badge/Microsoft%20Azure-VM-0078D4?logo=microsoftazure&logoColor=white)
-![Windows](https://img.shields.io/badge/Windows%20Server-Event%20Logs-0078D4?logo=windows&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
-
 ---
 
 ## Table of Contents
@@ -30,7 +25,9 @@
 - [Security Notes](#security-notes)
 
 ---
+## Watch Me Build This Lab Here!
 
+---
 ## Overview
 
 | Field | Value |
