@@ -1,4 +1,4 @@
-# Lab 3 — Splunk SIEM & Log Analysis
+# Azure Splunk SIEM: Windows Security Monitoring & Detection
 
 **Deploying a free-tier SIEM on Azure to centralize Windows logging, build detections, and operationalize a SOC workflow**
 
