@@ -26,10 +26,8 @@
   - [4. Security Dashboard](#4-security-dashboard)
   - [5. Automated Security Detection](#5-automated-security-detection)
 - [Build Notes — Troubleshooting & Real-World Fixes](#build-notes--troubleshooting--real-world-fixes)
-- [Verification Checklist](#verification-checklist)
 - [Appendix — Extended Detections](#appendix--extended-detections)
 - [Security Notes](#security-notes)
-- [Screenshots](#screenshots)
 
 ---
 
@@ -212,9 +210,10 @@ index = windows_logs
 
 - Used a PowerShell log-generation script to simulate realistic SOC-relevant activity on a fresh VM — failed logons, a successful logon, service restarts, application warnings, and an account lockout — to validate the pipeline end-to-end before searching.
 
-> 📸 **Screenshot placeholder:** `images/04-receiving-port-config.png` — Settings → Forwarding and Receiving → Configure Receiving, showing port 9997 enabled.
-> 
+> <img width="918" height="583" alt="04-receiving-port-config" src="https://github.com/user-attachments/assets/e1edbb50-4d95-4015-aec3-bdf2c8f431c1" />
+
 > <img width="1250" height="631" alt="05-index-created" src="https://github.com/user-attachments/assets/96b1b0eb-638d-43c3-b5a7-0d8e7a565ba0" />
+![Uploading 04-receiving-port-config.png…]()
 
 > 📸 **Screenshot placeholder:** `images/06-forwarder-inputs-conf.png` — `inputs.conf` open in VS Code on the Windows Server VM.
 > 
@@ -231,11 +230,18 @@ index = windows_logs
 
 **Actual results from this environment:**
 - The successful-logins search returned **762 Event 4624 records in the last 24 hours**, correctly grouped by `Account_Name` — including 3 successful logons from the `Slandon` user account, alongside high-volume machine and Windows service accounts.
+  
+<img width="1515" height="808" alt="search-4624" src="https://github.com/user-attachments/assets/ad5136e2-df78-4907-885e-48be67a8a3db" />
+
 - The after-hours search returned **773 events** outside the 7am–7pm window. Most of this volume came from machine/service accounts (e.g. `Lab1-VM$`) rather than human users, so this is documented as an *after-hours authentication monitoring query* rather than a claim that all 773 events were suspicious — an important distinction when presenting this kind of data to a SOC audience.
 
 > 📸 **Screenshot placeholder:** `images/08-data-flowing-confirmed.png` — results of `index=windows_logs | head 100`, proving the pipeline is live.
-> 📸 **Screenshot placeholder:** `images/09-successful-logins-search.png` — results of the EventCode=4624 search, statted by account (762 events, including `Slandon`).
-> 📸 **Screenshot placeholder:** `images/10-after-hours-search.png` — results of the after-hours logins search (773 events).
+
+> <img width="1906" height="913" alt="09-Successful-logins-search" src="https://github.com/user-attachments/assets/dad19939-41ca-4c68-83d0-603b13673130" />
+
+> <img width="1883" height="920" alt="10-After-hours-search" src="https://github.com/user-attachments/assets/9de98722-7fb5-4d8a-8d92-781227d47d16" />
+
+
 
 ### 4. Security Dashboard
 
