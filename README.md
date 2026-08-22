@@ -5,6 +5,10 @@
 
 ---
 
+## 🎥 Watch Me Complete This Lab Here!
+
+---
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -25,10 +29,7 @@
 - [Security Notes](#security-notes)
 
 ---
-## Watch Me Build This Lab Here!
-
----
-## Overview
+## 📌 Overview
 
 | Field | Value |
 |---|---|
@@ -401,4 +402,10 @@ index=windows_logs sourcetype=WinEventLog:Security EventCode=4697
 
 ---
 
+## 👩🏽‍💻 Author
+Shirley Landon  Data Analysis | Cloud | IT | Automation
+
+**GitHub**: https://github.com/shirleylandondata/ **LinkedIn**: https://www.linkedin.com/in/shirleylandon/
+
+---
 *Part of a self-directed home-lab series building demonstrable, portfolio-ready SOC and cloud security skills — Splunk SIEM deployment, log ingestion, detection engineering, and alert tuning on Azure infrastructure.*
