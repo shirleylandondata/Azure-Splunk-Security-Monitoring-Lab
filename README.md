@@ -180,10 +180,11 @@ Configuration file on the forwarder host that defines what data to collect. Each
 
 ### 1. Splunk Enterprise Deployment
 
-- Provisioned an Ubuntu 24.04 Azure VM and downloaded the Splunk Enterprise `.deb` package.
+**Provisioned an Ubuntu 24.04 Azure VM and downloaded the Splunk Enterprise `.deb` package.**
+
 <img width="1403" height="652" alt="01-azure-splunkvm-overview" src="https://github.com/user-attachments/assets/b18889be-5d99-4f55-b2a8-f60c72ae32ae" />
 
-- Installed via `dpkg -i`, started the service with `--accept-license --run-as-root`, and enabled boot-start persistence.
+**Installed via `dpkg -i`, started the service with `--accept-license --run-as-root`, and enabled boot-start persistence.**
 
 ```bash
 wget -O splunk-10.2.2-linux-amd64.deb "https://download.splunk.com/products/splunk/releases/10.2.2/linux/splunk-10.2.2-80b90d638de6-linux-amd64.deb"
@@ -191,13 +192,14 @@ sudo dpkg -i splunk-10.2.2-linux-amd64.deb
 sudo /opt/splunk/bin/splunk start --accept-license --run-as-root
 sudo /opt/splunk/bin/splunk enable boot-start
 ```
-- Connected via SSH public-key authentication rather than a password: converted the Azure-issued `.pem` key to PuTTY's `.ppk` format with PuTTYgen, loaded it under **Connection → SSH → Auth → Credentials**, and set the auto-login username so PuTTY connects non-interactively.
+
+**Connected via SSH public-key authentication rather than a password: converted the Azure-issued `.pem` key to PuTTY's `.ppk` format with PuTTYgen, loaded it under **Connection → SSH → Auth → Credentials**, and set the auto-login username so PuTTY connects non-interactively.**
 
 <img width="1156" height="771" alt="03 1splunk-web-login" src="https://github.com/user-attachments/assets/48475477-ede4-47cd-bfee-9f1e29090969" />
 
 <img width="1259" height="784" alt="03-splunk-web-login" src="https://github.com/user-attachments/assets/05cf9ba1-a65d-4a33-b585-12a7e9c97728" />
 
-- Scoped NSG rules so the Web UI and SSH are reachable only from an admin IP, and the forwarder-ingest port is reachable only from the peered VNet — never the public internet.
+**Scoped NSG rules so the Web UI and SSH are reachable only from an admin IP, and the forwarder-ingest port is reachable only from the peered VNet — never the public internet.**
 
 <img width="1420" height="647" alt="02-nsg-inbound-rules" src="https://github.com/user-attachments/assets/f5a4681e-0e9d-4d7d-a175-43c6229a8b83" />
 
@@ -208,7 +210,9 @@ sudo /opt/splunk/bin/splunk enable boot-start
 
 <img width="1247" height="385" alt="Enabled_Port_9997" src="https://github.com/user-attachments/assets/67963f22-ad8a-4c4c-8db7-e80e6dda0ee0" />
 
-- **Installed the Universal Forwarder on the Windows Server VM, pointing it at the Splunk indexer's private IP on port `9997` (no Deployment Server configured).**
+**Installed the Universal Forwarder on the Windows Server VM, pointing it at the Splunk indexer's private IP on port `9997` (no Deployment Server configured).**
+
+<img width="766" height="877" alt="Splunk_Universal_Installer" src="https://github.com/user-attachments/assets/9e2d9286-fea3-4617-b0e6-efd18b696368" />
 
 **Inputs Configuration**
 *Authored `inputs.conf` to forward the `Security`, `System`, and `Application` Windows Event Logs into `windows_logs`:*
@@ -232,9 +236,10 @@ disabled = 0
 index = windows_logs
 ```
 
-**Used a PowerShell log-generation script to simulate realistic SOC-relevant activity on a fresh VM — failed logons, a successful logon, service restarts, application warnings, and an account lockout — to validate the pipeline end-to-end before searching.**
+**Used a PowerShell log-generation script to simulate realistic SOC-relevant activity on a fresh VM** — failed logons, a successful logon, service restarts, application warnings, and an account lockout — to validate the pipeline end-to-end before searching.
 
-> <img width="899" height="572" alt="06-forwarder-inputs" src="https://github.com/user-attachments/assets/ea27e2d7-b90f-45cd-ab3e-b4c964e8efe4" />
+<img width="769" height="756" alt="Screenshot 2026-08-23 180128" src="https://github.com/user-attachments/assets/11f11437-cfac-4e57-b563-22a11d0b5cb9" />
+
 
 **RECEIVING PORT CONFIGURATION**
 *Settings → Forwarding and Receiving → Configure Receiving, showing port 9997 enabled.*
@@ -261,11 +266,12 @@ index = windows_logs
 | After-hours logins | `index=windows_logs sourcetype=WinEventLog:Security EventCode=4624 \| eval hour=strftime(_time,"%H") \| where hour<7 OR hour>19 \| table _time, Account_Name, Account_Domain, ComputerName \| sort -_time` |
 
 **Actual results from this environment:**
-- The successful-logins search returned **762 Event 4624 records in the last 24 hours**, correctly grouped by `Account_Name` — including 3 successful logons from the `Slandon` user account, alongside high-volume machine and Windows service accounts.
+
+The successful-logins search returned **762 Event 4624 records in the last 24 hours**, correctly grouped by `Account_Name` — including 3 successful logons from the `Slandon` user account, alongside high-volume machine and Windows service accounts.
   
 <img width="1515" height="808" alt="search-4624" src="https://github.com/user-attachments/assets/ad5136e2-df78-4907-885e-48be67a8a3db" />
 
-- The after-hours search returned **773 events** outside the 7am–7pm window. Most of this volume came from machine/service accounts (e.g. `Lab1-VM$`) rather than human users, so this is documented as an *after-hours authentication monitoring query* rather than a claim that all 773 events were suspicious — an important distinction when presenting this kind of data to a SOC audience.
+The after-hours search returned **773 events** outside the 7am–7pm window. Most of this volume came from machine/service accounts (e.g. `Lab1-VM$`) rather than human users, so this is documented as an *after-hours authentication monitoring query* rather than a claim that all 773 events were suspicious — an important distinction when presenting this kind of data to a SOC audience.
 
 **Results of index=windows_logs | head 100, proving the pipeline is live**
 <img width="1864" height="922" alt="08-data-flowing-confirmed" src="https://github.com/user-attachments/assets/d8876ffd-6919-4b5a-b971-a9928fd6c7e5" />
