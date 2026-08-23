@@ -283,27 +283,29 @@ index = windows_logs
 
 **Actual results from this environment:**
 
-The successful-logins search returned **762 Event 4624 records in the last 24 hours**, correctly grouped by `Account_Name` — including 3 successful logons from the `Slandon` user account, alongside high-volume machine and Windows service accounts.
-  
-<img width="1515" height="808" alt="search-4624" src="https://github.com/user-attachments/assets/ad5136e2-df78-4907-885e-48be67a8a3db" />
-
-The after-hours search returned **773 events** outside the 7am–7pm window. Most of this volume came from machine/service accounts (e.g. `Lab1-VM$`) rather than human users, so this is documented as an *after-hours authentication monitoring query* rather than a claim that all 773 events were suspicious — an important distinction when presenting this kind of data to a SOC audience.
-
 **Results of index=windows_logs | head 100, proving the pipeline is live**
 
 <img width="1864" height="922" alt="08-data-flowing-confirmed" src="https://github.com/user-attachments/assets/d8876ffd-6919-4b5a-b971-a9928fd6c7e5" />
 
+*This search validates the end-to-end log ingestion pipeline. Events appearing in the `windows_logs` index confirm that Windows Event Logs are being collected by the Splunk Universal Forwarder, transmitted to the Splunk indexer, and successfully indexed for analysis.*
+
 ---
 
-**Results of the EventCode=4624 search, stated by account (762 events, including Slandon)**
+**Results of Successful logins**
+
 > <img width="1906" height="913" alt="09-Successful-logins-search" src="https://github.com/user-attachments/assets/dad19939-41ca-4c68-83d0-603b13673130" />
+
+*The successful-login search returned 762 EventCode 4624 records during the selected 24-hour period. Grouping the events by `Account_Name` makes it possible to distinguish normal Windows and service-account activity from interactive user logons, including activity from the `Slandon` account. This type of aggregation gives a SOC analyst a quick baseline for identifying unusual authentication behavior.*
 
 ---
 
 **Results of the after-hours logins search (773 events).**
+
 > <img width="1883" height="920" alt="10-After-hours-search" src="https://github.com/user-attachments/assets/9de98722-7fb5-4d8a-8d92-781227d47d16" />
 
+*The after-hours search returned **773 events** outside the 7am–7pm window. Most of this volume came from machine/service accounts (e.g. `Lab1-VM$`) rather than human users, so this is documented as an *after-hours authentication monitoring query* rather than a claim that all 773 events were suspicious — an important distinction when presenting this kind of data to a SOC audience.*
 
+---
 
 ### 4. Security Dashboard
 
