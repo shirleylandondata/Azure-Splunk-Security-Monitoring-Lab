@@ -204,11 +204,14 @@ sudo /opt/splunk/bin/splunk enable boot-start
 
 ### 2. Data Input Configuration
 
-- Enabled receiving on port `9997` and created a dedicated index, `windows_logs`, in the Splunk Web UI.
+**Enabled receiving on port `9997` and created a dedicated index, `windows_logs`, in the Splunk Web UI.**
+
 <img width="1247" height="385" alt="Enabled_Port_9997" src="https://github.com/user-attachments/assets/67963f22-ad8a-4c4c-8db7-e80e6dda0ee0" />
 
-- Installed the Universal Forwarder on the Windows Server VM, pointing it at the Splunk indexer's **private** IP on port `9997` (no Deployment Server configured).
-- Authored `inputs.conf` to forward the `Security`, `System`, and `Application` Windows Event Logs into `windows_logs`:
+- **Installed the Universal Forwarder on the Windows Server VM, pointing it at the Splunk indexer's private IP on port `9997` (no Deployment Server configured).**
+
+**Inputs Configuration**
+*Authored `inputs.conf` to forward the `Security`, `System`, and `Application` Windows Event Logs into `windows_logs`:*
 
 ```ini
 # C:\Program Files\SplunkUniversalForwarder\etc\system\local\inputs.conf
@@ -228,16 +231,24 @@ index = windows_logs
 disabled = 0
 index = windows_logs
 ```
-*Used a PowerShell log-generation script to simulate realistic SOC-relevant activity on a fresh VM — failed logons, a successful logon, service restarts, application warnings, and an account lockout — to validate the pipeline end-to-end before searching.*
+
+**Used a PowerShell log-generation script to simulate realistic SOC-relevant activity on a fresh VM — failed logons, a successful logon, service restarts, application warnings, and an account lockout — to validate the pipeline end-to-end before searching.**
+
 > <img width="899" height="572" alt="06-forwarder-inputs" src="https://github.com/user-attachments/assets/ea27e2d7-b90f-45cd-ab3e-b4c964e8efe4" />
 
-**Settings → Forwarding and Receiving → Configure Receiving, showing port 9997 enabled.**
+**RECEIVING PORT CONFIGURATION**
+*Settings → Forwarding and Receiving → Configure Receiving, showing port 9997 enabled.*
+
 > <img width="918" height="583" alt="04-receiving-port-config" src="https://github.com/user-attachments/assets/e1edbb50-4d95-4015-aec3-bdf2c8f431c1" />
 
-**Settings → Indexes, showing the windows_logs index created.**
+**WINDOWS LOGS INDEX**
+*Settings → Indexes, showing the windows_logs index created.*
+
 > <img width="1250" height="631" alt="05-index-created" src="https://github.com/user-attachments/assets/96b1b0eb-638d-43c3-b5a7-0d8e7a565ba0" />
 
-**PowerShell console output from the the log-generation script**
+**LOG GENERATION OUTPUT**
+*PowerShell console output from the the log-generation script*
+
 > <img width="1068" height="779" alt="07-log-generator-output" src="https://github.com/user-attachments/assets/9c6ff7b5-1128-4963-bfe8-0e8a601f1429" />
 
 
