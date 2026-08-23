@@ -82,7 +82,7 @@ The diagram below shows the full data path: Windows Server generates event logs 
 
 A medium-sized organization generates millions of log events every day — Windows Event Logs from workstations, authentication logs from Active Directory, firewall logs, web server access logs, cloud resource logs. Without a SIEM, that data sits siloed across systems: nobody can search across it, correlate events, or spot patterns that indicate an attack.
 
-The SIEM is the SOC's primary tool. When an alert fires, an analyst opens the SIEM to understand what happened, when, from where, and what was affected. Splunk is the most widely deployed commercial SIEM — building real, demonstrable experience with it maps directly onto job requirements across nearly every security operations role.
+**The SIEM is the SOC's primary tool. When an alert fires, an analyst opens the SIEM to understand what happened, when, from where, and what was affected.** Splunk is the most widely deployed commercial SIEM — building real, demonstrable experience with it maps directly onto job requirements across nearly every security operations role.
 
 ## Relevance to Security Roles
 
@@ -122,7 +122,7 @@ A named storage bucket for events — conceptually similar to a database table. 
 <details>
 <summary><strong>Universal Forwarder</strong></summary>
 
-A lightweight, free agent installed on any machine whose logs need shipping to Splunk. Monitors log files/Windows Event Logs, compresses and encrypts data, and forwards it to the indexer over port 9997. Low CPU/RAM footprint, designed to run invisibly on production hosts.
+A lightweight, free agent installed on any machine whose logs need shipping to Splunk. **Monitors log files/Windows Event Logs, compresses and encrypts data, and forwards it to the indexer over port 9997.** Low CPU/RAM footprint, designed to run invisibly on production hosts.
 </details>
 
 <details>
@@ -142,7 +142,7 @@ A lightweight, free agent installed on any machine whose logs need shipping to S
 <details>
 <summary><strong>inputs.conf</strong></summary>
 
-Configuration file on the forwarder host that defines what data to collect. Each `[section]` in square brackets defines one log source (e.g. `[WinEventLog://Security]`), with settings like `disabled=0` (enabled) and `index=windows_logs` controlling routing.
+**Configuration file on the forwarder host that defines what data to collect.** Each `[section]` in square brackets defines one log source (e.g. `[WinEventLog://Security]`), with settings like `disabled=0` (enabled) and `index=windows_logs` controlling routing.
 </details>
 
 ---
@@ -184,6 +184,8 @@ Configuration file on the forwarder host that defines what data to collect. Each
 
 <img width="1403" height="652" alt="01-azure-splunkvm-overview" src="https://github.com/user-attachments/assets/b18889be-5d99-4f55-b2a8-f60c72ae32ae" />
 
+---
+
 **Installed via `dpkg -i`, started the service with `--accept-license --run-as-root`, and enabled boot-start persistence.**
 
 ```bash
@@ -192,12 +194,15 @@ sudo dpkg -i splunk-10.2.2-linux-amd64.deb
 sudo /opt/splunk/bin/splunk start --accept-license --run-as-root
 sudo /opt/splunk/bin/splunk enable boot-start
 ```
+---
 
 **Connected via SSH public-key authentication rather than a password: converted the Azure-issued `.pem` key to PuTTY's `.ppk` format with PuTTYgen, loaded it under **Connection → SSH → Auth → Credentials**, and set the auto-login username so PuTTY connects non-interactively.**
 
 <img width="1156" height="771" alt="03 1splunk-web-login" src="https://github.com/user-attachments/assets/48475477-ede4-47cd-bfee-9f1e29090969" />
 
 <img width="1259" height="784" alt="03-splunk-web-login" src="https://github.com/user-attachments/assets/05cf9ba1-a65d-4a33-b585-12a7e9c97728" />
+
+---
 
 **Scoped NSG rules so the Web UI and SSH are reachable only from an admin IP, and the forwarder-ingest port is reachable only from the peered VNet — never the public internet.**
 
@@ -210,9 +215,13 @@ sudo /opt/splunk/bin/splunk enable boot-start
 
 <img width="1247" height="385" alt="Enabled_Port_9997" src="https://github.com/user-attachments/assets/67963f22-ad8a-4c4c-8db7-e80e6dda0ee0" />
 
+---
+
 **Installed the Universal Forwarder on the Windows Server VM, pointing it at the Splunk indexer's private IP on port `9997` (no Deployment Server configured).**
 
 <img width="766" height="877" alt="Splunk_Universal_Installer" src="https://github.com/user-attachments/assets/9e2d9286-fea3-4617-b0e6-efd18b696368" />
+
+---
 
 **Inputs Configuration**
 *Authored `inputs.conf` to forward the `Security`, `System`, and `Application` Windows Event Logs into `windows_logs`:*
@@ -236,20 +245,27 @@ disabled = 0
 index = windows_logs
 ```
 
+---
+
 **Used a PowerShell log-generation script to simulate realistic SOC-relevant activity on a fresh VM** — failed logons, a successful logon, service restarts, application warnings, and an account lockout — to validate the pipeline end-to-end before searching.
 
 <img width="769" height="756" alt="Screenshot 2026-08-23 180128" src="https://github.com/user-attachments/assets/11f11437-cfac-4e57-b563-22a11d0b5cb9" />
 
+---
 
 **RECEIVING PORT CONFIGURATION**
 *Settings → Forwarding and Receiving → Configure Receiving, showing port 9997 enabled.*
 
 > <img width="918" height="583" alt="04-receiving-port-config" src="https://github.com/user-attachments/assets/e1edbb50-4d95-4015-aec3-bdf2c8f431c1" />
 
+---
+
 **WINDOWS LOGS INDEX**
 *Settings → Indexes, showing the windows_logs index created.*
 
 > <img width="1250" height="631" alt="05-index-created" src="https://github.com/user-attachments/assets/96b1b0eb-638d-43c3-b5a7-0d8e7a565ba0" />
+
+---
 
 **LOG GENERATION OUTPUT**
 *PowerShell console output from the the log-generation script*
@@ -274,10 +290,15 @@ The successful-logins search returned **762 Event 4624 records in the last 24 ho
 The after-hours search returned **773 events** outside the 7am–7pm window. Most of this volume came from machine/service accounts (e.g. `Lab1-VM$`) rather than human users, so this is documented as an *after-hours authentication monitoring query* rather than a claim that all 773 events were suspicious — an important distinction when presenting this kind of data to a SOC audience.
 
 **Results of index=windows_logs | head 100, proving the pipeline is live**
+
 <img width="1864" height="922" alt="08-data-flowing-confirmed" src="https://github.com/user-attachments/assets/d8876ffd-6919-4b5a-b971-a9928fd6c7e5" />
+
+---
 
 **Results of the EventCode=4624 search, stated by account (762 events, including Slandon)**
 > <img width="1906" height="913" alt="09-Successful-logins-search" src="https://github.com/user-attachments/assets/dad19939-41ca-4c68-83d0-603b13673130" />
+
+---
 
 **Results of the after-hours logins search (773 events).**
 > <img width="1883" height="920" alt="10-After-hours-search" src="https://github.com/user-attachments/assets/9de98722-7fb5-4d8a-8d92-781227d47d16" />
@@ -305,7 +326,7 @@ Built a **Windows Security Monitoring Dashboard** with three KPI cards and four 
 
 After reviewing Event ID 4672 activity, I created a scheduled Splunk detection for excessive privileged logons.
 
-The initial search showed that Windows system accounts and computer accounts generated large volumes of Event ID 4672 events. These represented expected system activity and would have created significant alert noise.
+*The initial search showed that Windows system accounts and computer accounts generated large volumes of Event ID 4672 events.* These represented expected system activity and would have created significant alert noise.
 
 To improve detection quality, I filtered those accounts from the search and focused the detection on human user accounts.
 
@@ -340,7 +361,7 @@ During testing, the detection identified the `Slandon` account with six privileg
 
 The alert was successfully validated through Splunk's Trigger History, confirming that the scheduled detection executed and generated alerts when the threshold was exceeded.
 
-> This is stronger portfolio evidence than simply using the lab's default threshold, since it shows the process of reviewing real data, identifying noisy system accounts, filtering them out, tuning a threshold appropriate for the environment, and verifying the detection worked.
+This is stronger portfolio evidence than simply using the lab's default threshold, since it shows the process of reviewing real data, identifying noisy system accounts, filtering them out, tuning a threshold appropriate for the environment, and verifying the detection worked.
 
 <img width="1333" height="555" alt="13-alert-seach-results" src="https://github.com/user-attachments/assets/14330311-7289-41ab-8492-73e2287052b9" />
 
@@ -373,7 +394,7 @@ The Windows Server/domain controller VM and the Splunk VM were provisioned into 
 **6. Missing Event ID 4740 (account lockout) — root cause in AD policy, not Splunk**
 After generating test failed-logon activity, Event 4625 (failed logon) appeared in Splunk immediately, but Event 4740 (account lockout) never did. Rather than assume a forwarding problem, checked for the event directly on the Windows side first (`Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4740}`), which came back empty — proving Windows itself never generated the event, so nothing was missing on the Splunk side. Traced this to the domain's default password policy: `Get-ADDefaultDomainPasswordPolicy` showed `LockoutThreshold : 0`, meaning account lockout was disabled domain-wide. Set a real threshold (`Set-ADDefaultDomainPasswordPolicy -LockoutThreshold 5 -LockoutDuration 00:10:00 -LockoutObservationWindow 00:10:00`), created a dedicated test account rather than risking the admin account, deliberately failed 5 logons against it, and confirmed both the AD lockout (`LockedOut : True`) and the resulting Splunk-side Event 4740 — validating the complete pipeline: **failed logons → AD lockout → Event 4740 → Universal Forwarder → Splunk index → SPL detection.**
 
-> This kind of "the tool is fine, the policy is the problem" diagnosis — checking assumptions at the source before troubleshooting downstream — is a core SOC/IR skill, and arguably better portfolio evidence than a lab that worked flawlessly the first time.
+This kind of "the tool is fine, the policy is the problem" diagnosis — checking assumptions at the source before troubleshooting downstream — is a core SOC/IR skill, and arguably better portfolio evidence than a lab that worked flawlessly the first time.
 
 ---
 
