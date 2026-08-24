@@ -5,7 +5,8 @@
 
 ---
 
-## 🎥 Watch Me Complete This Lab Here!
+## 🎥 Watch The Lab Walkthrough Here!
+https://www.loom.com/share/a1a790ec8042424b88d169fb19a7d076
 
 ---
 
